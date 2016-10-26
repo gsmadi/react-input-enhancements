@@ -5,7 +5,7 @@ var CleanWebpackPlugin = require('clean-webpack-plugin');
 var NyanProgressWebpackPlugin = require('nyan-progress-webpack-plugin');
 
 var config = {
-  port: 3000
+  port: 3030
 };
 
 try {

@@ -112,7 +112,7 @@ export default class Dropdown extends PureComponent {
     dropdownProps: {},
 
     optionFilters: [
-      filters.filterByMatchingTextWithThreshold(20),
+      filters.filterByMatchingTextWithThreshold(100),
       filters.sortByMatchingText,
       filters.limitBy(100),
       filters.notFoundMessage('No matches found'),
