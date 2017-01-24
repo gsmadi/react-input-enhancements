@@ -84,10 +84,10 @@ export default class Dropdown extends PureComponent {
   };
 
   static defaultProps = {
-    onRenderOption: (styling, opt, highlighted, disabled) =>
+    onRenderOption: (styling, opt, highlighted, disabled, hovered) =>
       opt !== null ?
-        <div {...styling('inputEnhancementsOption', highlighted, disabled)}>
-          {getOptionLabel(opt, highlighted, disabled)}
+        <div {...styling('inputEnhancementsOption', highlighted, disabled, hovered)}>
+          {getOptionLabel(opt, highlighted, disabled, hovered)}
         </div> :
         <div {...styling('inputEnhancementsSeparator')} />,
 
@@ -207,18 +207,22 @@ export default class Dropdown extends PureComponent {
     const { onRenderOption } = this.props;
     const highlighted = idx === this.state.highlightedIndex;
     const disabled = opt && opt.disabled;
+    const hovered = idx === this.state.hoveredIndex;
 
     return (
       <DropdownOption
         key={getOptionKey(opt, idx)}
         onMouseDown={this.handleOptionClick.bind(this, idx)}
+        onMouseOver={this.highlightOnMouseOver.bind(this, idx)}
+        onMouseLeave={this.resetHoveredOption.bind(this, idx)}
         highlighted={highlighted}
       >
         {onRenderOption(
           this.styling,
           opt,
           highlighted,
-          disabled
+          disabled,
+          hovered
         )}
       </DropdownOption>
     );
@@ -237,6 +241,17 @@ export default class Dropdown extends PureComponent {
     }, () => {
       this.selectOption(findOptionIndex(this.props.options, option), true);
     });
+  }
+
+  highlightOnMouseOver(idx) {
+    const option = this.state.shownOptions[idx];
+    const index = findOptionIndex(this.props.options, option);
+
+    this.setState({ hoveredIndex: index });
+  }
+
+  resetHoveredOption() {
+    this.setState({ hoveredIndex: null });
   }
 
   handleChange = e => {
@@ -271,9 +286,11 @@ export default class Dropdown extends PureComponent {
     const { highlightedIndex, shownOptions } = this.state;
 
     e.preventDefault();
+    e.stopPropagation();
 
     this.setState({
-      highlightedIndex: getSiblingIndex(highlightedIndex, shownOptions, false)
+      highlightedIndex: getSiblingIndex(highlightedIndex, shownOptions, false),
+      hoveredIndex: null
     });
   }
 
@@ -281,9 +298,11 @@ export default class Dropdown extends PureComponent {
     const { highlightedIndex, shownOptions } = this.state;
 
     e.preventDefault();
+    e.stopPropagation();
 
     this.setState({
-      highlightedIndex: getSiblingIndex(highlightedIndex, shownOptions, true)
+      highlightedIndex: getSiblingIndex(highlightedIndex, shownOptions, true),
+      hoveredIndex: null
     });
   }
 
