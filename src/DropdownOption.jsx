@@ -33,8 +33,8 @@ export default class DropdownOption extends PureComponent {
 
   render() {
     return (
-      <div onMouseDown={this.props.onMouseDown}>
-        {this.props.children}
+      <div id='rie-dropdown-option' onMouseDown={this.props.onMouseDown}>
+          {this.props.children}
       </div>
     );
   }
