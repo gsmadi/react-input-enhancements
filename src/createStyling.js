@@ -237,7 +237,7 @@ function getStylingFromBase16(/*base16Theme*/) {
     inputEnhancementsPopup: prefixer({
       display: 'flex',
       position: 'absolute',
-      left: 0,
+      right: 0,
       top: '100%',
       zIndex: 10000,
       maxHeight: '30rem',

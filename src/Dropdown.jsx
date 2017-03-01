@@ -100,7 +100,7 @@ export default class Dropdown extends PureComponent {
       ),
 
     onRenderListHeader: (allCount, shownCount, staticCount) => {
-      if (allCount - staticCount < 20) return null;
+      if (allCount - staticCount < 5) return null;
       const allItems = `${allCount - staticCount} ${
         (allCount - staticCount) === 1 ? 'item' : 'items'
       }`;
@@ -114,7 +114,6 @@ export default class Dropdown extends PureComponent {
     optionFilters: [
       filters.filterByMatchingTextWithThreshold(100),
       filters.sortByMatchingText,
-      filters.limitBy(100),
       filters.notFoundMessage('No matches found'),
       filters.filterRedudantSeparators
     ]
