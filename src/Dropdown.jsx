@@ -84,9 +84,9 @@ export default class Dropdown extends PureComponent {
   };
 
   static defaultProps = {
-    onRenderOption: (styling, opt, highlighted, disabled) =>
+    onRenderOption: (styling, opt, highlighted, disabled, hovered) =>
       opt !== null ?
-        <div {...styling('inputEnhancementsOption', highlighted, disabled)}>
+        <div {...styling('inputEnhancementsOption', highlighted, disabled, hovered)}>
           {getOptionLabel(opt, highlighted, disabled)}
         </div> :
         <div {...styling('inputEnhancementsSeparator')} />,
@@ -206,18 +206,22 @@ export default class Dropdown extends PureComponent {
     const { onRenderOption } = this.props;
     const highlighted = idx === this.state.highlightedIndex;
     const disabled = opt && opt.disabled;
+    const hovered = idx === this.state.hoveredIndex;
 
     return (
       <DropdownOption
         key={getOptionKey(opt, idx)}
         onMouseDown={this.handleOptionClick.bind(this, idx)}
+        onMouseOver={this.handleHover.bind(this, idx)}
+        onMouseLeave={this.handleHoverLeave.bind(this)}
         highlighted={highlighted}
       >
         {onRenderOption(
           this.styling,
           opt,
           highlighted,
-          disabled
+          disabled,
+          hovered
         )}
       </DropdownOption>
     );
@@ -235,6 +239,18 @@ export default class Dropdown extends PureComponent {
       listShown: false
     }, () => {
       this.selectOption(findOptionIndex(this.props.options, option), true);
+    });
+  }
+
+  handleHover(idx) {
+    this.setState({
+      hoveredIndex: idx
+    });
+  }
+
+  handleHoverLeave() {
+    this.setState({
+      hoveredIndex: null
     });
   }
 

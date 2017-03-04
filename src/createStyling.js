@@ -199,7 +199,8 @@ function getStylingFromBase16(/*base16Theme*/) {
         } : {
           padding: '1rem 1.5rem',
           cursor: 'pointer',
-          backgroundColor: hovered ? '#3333FF' : '#FFFFFF'
+          backgroundColor: hovered ? '#3333FF' : '#FFFFFF',
+          color: hovered ? '#FFFFFF' : '#666666',
         }))
       }
     }),
